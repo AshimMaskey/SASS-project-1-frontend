@@ -1,7 +1,12 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 
 const HomePage = () => {
-  return <div className="text-amber-400">HomePage</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default HomePage;
