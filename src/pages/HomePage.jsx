@@ -4,18 +4,16 @@ import axios from "axios";
 import Card from "../components/Card";
 
 const HomePage = () => {
-  const [books, setBooks] = React.useState(null);
+  const [books, setBooks] = React.useState([]);
+  const fetchBooks = async () => {
+    const response = await axios.get("http://localhost:3000/api/books");
+    setBooks(response.data.datas);
+  };
   useEffect(() => {
-    const fetchBooks = async () => {
-      const fetchedBooks = await axios.get("http://localhost:3000/api/books");
-      setBooks(fetchedBooks.data);
-    };
     fetchBooks();
   }, []);
 
-  //comment hello dsf
-
-  if (!books) {
+  if (books.length === 0) {
     return <div>Loading...</div>;
   }
   console.log(books);
@@ -23,13 +21,9 @@ const HomePage = () => {
     <>
       <Navbar />
       <div className="flex gap-10 flex-wrap">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {books.map((book) => {
+          return <Card key={book.id} book={book} />;
+        })}
       </div>
     </>
   );
